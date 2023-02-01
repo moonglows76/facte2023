@@ -54,24 +54,33 @@ export default {
   // https://document.microcms.io/tutorial/nuxt/nuxt-getting-started#hb78937a099
   async asyncData({ $microcms }) {
     // axiosの代わりに$microcmsを使う（先生の環境ではなぜかaxiosが動かなかったので、$microcmsを使いました）
-    //
     const data = await $microcms.get({
       endpoint: 'facte',
       queries: { limit: 100 }
     });
     return data;
   },
+  // computed　→　算出プロパティ
+  // 元のデータをそのまま使うのではなく、少し処理を加えて名前をつけたいときに使います
+  // 必ず return が必要です。
   computed: {
+    // 下の記述はオブジェクトの値の省略記法をしています
+    // 下記のように {} で囲んだ中に、「名前:値（or 処理）」が入っているものをオブジェクトと言います。
+    // {
+    //   endpoint: 'facte',
+    //   queries: { limit: 100 }
+    //   Bikes250cc: function() { return this.contents.filter(el => el.bike_scorecc[0] === '250cc') }
+    // }
+    // 下記の記述では、
+    // Bikes250: function() { 処理 } を略して Bikes250() { 処理 } と書いています
     Bikes250cc() {
       return this.contents.filter(el => el.bike_scorecc[0] === '250cc')
     },
     Bikes400cc() {
-      const bikes = this.contents.filter(el => el.bike_scorecc[0] === '400cc')
-      return bikes
+      return this.contents.filter(el => el.bike_scorecc[0] === '400cc')
     },
     Bikes400ccover() {
-      const bikes = this.contents.filter(el => el.bike_scorecc[0] === '400ccover')
-      return bikes
+      return this.contents.filter(el => el.bike_scorecc[0] === '400ccover')
     },
   },
 }
